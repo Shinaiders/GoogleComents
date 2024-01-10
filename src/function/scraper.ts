@@ -23,8 +23,8 @@ export async function scrapeGoogleReviews(
       return res.status(200).json(parsedSession);
     } else {
       const browser = await puppeteer.launch({
-        // args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        // headless: "new",
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        headless: "new",
       });
       const page = await browser.newPage();
       // Vá para a página inicial do Google
