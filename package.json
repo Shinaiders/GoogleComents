@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.ts",
-    "start": "tsc && node dist/server.js",
+    "start": "tsc && node public/server.js",
     "build": "tsc"
   },
   "author": "macshinaider",
