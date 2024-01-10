@@ -67,7 +67,7 @@ export async function scrapeGoogleReviews(
     }
   } catch (error) {
     return res.status(500).json({
-      error: "deu algum problema",
+      error: error,
     });
   }
 }
