@@ -24,6 +24,7 @@ export async function scrapeGoogleReviews(
     } else {
       const browser = await puppeteer.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        headless: "new",
       });
       const page = await browser.newPage();
       // Vá para a página inicial do Google
