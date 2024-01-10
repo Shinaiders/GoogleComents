@@ -9,24 +9,21 @@ export async function scrapeGoogleReviews(
 ) {
   try {
     const url = req.body.url;
-    
+
     if (!url) {
       return res.status(400).json({
         error: "url is required",
       });
     }
     const UserSession = await client.get(url);
-    
-    
 
     if (UserSession) {
       const parsedSession = JSON.parse(UserSession);
-      
+
       return res.status(200).json(parsedSession);
     } else {
       const browser = await puppeteer.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        headless: true,
       });
       const page = await browser.newPage();
       // Vá para a página inicial do Google
@@ -35,7 +32,7 @@ export async function scrapeGoogleReviews(
       const selector =
         "#reviewSort > div > div.gws-localreviews__general-reviews-block";
 
-      await page.waitForSelector(selector, { visible: true, timeout: 30000 });
+      await page.waitForSelector(selector, { visible: true, timeout: 50000 });
 
       const comments = await page.evaluate(() => {
         // Selecione todos os elementos de comentário na página
