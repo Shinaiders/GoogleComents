@@ -33,7 +33,7 @@ export async function scrapeGoogleReviews(
       const selector =
         "#reviewSort > div > div.gws-localreviews__general-reviews-block";
 
-      await page.waitForSelector(selector, { visible: true, timeout: 50000 });
+      await page.waitForSelector(selector, { timeout: 50000 });
 
       const comments = await page.evaluate(() => {
         // Selecione todos os elementos de comentário na página
