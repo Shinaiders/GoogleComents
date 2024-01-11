@@ -7,6 +7,6 @@ router.get("/", (req, res) => {
   res.send("Tudo está funcionando corretamente!");
 });
 
-router.get("/scrapper", scrapeGoogleReviews)
+router.post("/scrapper", scrapeGoogleReviews)
 
 export default router;
