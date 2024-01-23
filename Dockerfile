@@ -1,5 +1,4 @@
-FROM ghcr.io/puppeteer/puppeteer:latest
-FROM node:18-slim
+FROM node:18
 
 WORKDIR /app
 
@@ -45,6 +44,8 @@ RUN apt-get update && apt-get install -y \
 COPY package.json .
 
 RUN npm install
+
+RUN npx puppeteer browsers install chrome
 
 COPY . .
 

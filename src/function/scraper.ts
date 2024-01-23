@@ -19,21 +19,22 @@ export async function scrapeGoogleReviews(
 
     if (UserSession) {
       const parsedSession = JSON.parse(UserSession);
+      console.log(parsedSession)
 
       return res.status(200).json(parsedSession);
     } else {
       const browser = await puppeteer.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        headless: "new",
+        headless: true,
       });
       const page = await browser.newPage();
-      // Vá para a página inicial do Google
+      
       await page.goto(url);
 
       const selector =
         "#reviewSort > div > div.gws-localreviews__general-reviews-block";
 
-      await page.waitForSelector(selector, { timeout: 50000 });
+      await page.waitForSelector(selector, { timeout: 90000 });
 
       const comments = await page.evaluate(() => {
         // Selecione todos os elementos de comentário na página
@@ -60,11 +61,14 @@ export async function scrapeGoogleReviews(
       await client.expire(url, 3600);
 
       await browser.close();
+      console.log(comments)
 
       return res.status(200).json(comments);
     }
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
+      
       error: error,
     });
   }
