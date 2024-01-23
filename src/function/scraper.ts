@@ -3,6 +3,8 @@ import express from "express";
 import puppeteer from "puppeteer";
 import { client } from "../libs/redis.client";
 
+require('events').EventEmitter.defaultMaxListeners = 100;
+
 export async function scrapeGoogleReviews(
   req: express.Request,
   res: express.Response
@@ -25,7 +27,7 @@ export async function scrapeGoogleReviews(
     } else {
       const browser = await puppeteer.launch({
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        headless: true,
+        headless: "new",
       });
       const page = await browser.newPage();
       
@@ -34,7 +36,7 @@ export async function scrapeGoogleReviews(
       const selector =
         "#reviewSort > div > div.gws-localreviews__general-reviews-block";
 
-      await page.waitForSelector(selector, { timeout: 90000 });
+      await page.waitForSelector(selector, { timeout: 15000 });
 
       const comments = await page.evaluate(() => {
         // Selecione todos os elementos de comentário na página
