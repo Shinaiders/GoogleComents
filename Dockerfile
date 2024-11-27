@@ -73,6 +73,9 @@ COPY . .
 
 # Executar o Prisma (se necessário)
 
+RUN npx puppeteer browsers install chrome
+ 
+
 
 # Expor a porta 3001
 EXPOSE 3001
