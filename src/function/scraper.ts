@@ -26,10 +26,13 @@ export async function scrapeGoogleReviews(
       return res.status(200).json(parsedSession);
     } else {
       const browser = await puppeteer.launch({
-        headless: true,        
+        headless: true,
+        executablePath: '/usr/bin/google-chrome',
         args: [
+          '--no-sandbox',
           '--disable-gpu',
           '--disable-dev-shm-usage',
+          '--disable-setuid-sandbox',
           '--disable-web-security',
           '--disable-features=IsolateOrigins,site-per-process'
         ]
