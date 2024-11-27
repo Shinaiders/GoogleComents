@@ -60,8 +60,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar as dependências e o Puppeteer
-RUN npm install --force \
-    && npm i puppeteer --force \
+RUN npm install \
+    && npm i puppeteer \
     # Adicionar usuário para evitar a necessidade de --no-sandbox
     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
