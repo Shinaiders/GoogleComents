@@ -26,8 +26,13 @@ export async function scrapeGoogleReviews(
       return res.status(200).json(parsedSession);
     } else {
       const browser = await puppeteer.launch({
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        headless: true,
+        headless: true,        
+        args: [
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+          '--disable-web-security',
+          '--disable-features=IsolateOrigins,site-per-process'
+        ]
       });
       const page = await browser.newPage();
       
