@@ -10,9 +10,17 @@ RUN apt-get update \
     && apt-get install -y google-chrome-stable \
     && rm -rf /var/lib/apt/lists/*
 
-# Configurar timezone
+# Configurar timezone e localização para Brasil
 ENV TZ=America/Sao_Paulo
+ENV LANG=pt_BR.UTF-8
+ENV LANGUAGE=pt_BR:pt
+ENV LC_ALL=pt_BR.UTF-8
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Instalar locale pt_BR
+RUN apt-get update && apt-get install -y locales \
+    && sed -i -e 's/# pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen
 
 # Configurar diretório de trabalho
 WORKDIR /app
@@ -37,6 +45,10 @@ EXPOSE 3001
 
 # Mudar para usuário não privilegiado
 USER pptruser
+
+# Adicionar variáveis de ambiente para geolocalização
+ENV PUPPETEER_EXTRA_ARGS="--lang=pt-BR"
+ENV CHROMIUM_ADDITIONAL_ARGS="--lang=pt-BR --accept-lang=pt-BR"
 
 # Comando para iniciar
 CMD ["npm", "run", "start"]
